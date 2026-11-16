@@ -1,0 +1,68 @@
+# GITHUB ACTIONS: this file tells GitHub when and how to run the claim desk.
+#
+# - It runs ONLY when someone clicks "Run workflow" in the Actions tab
+#   (only people with write access to this repository can do that).
+# - Your OpenAI key is read from a repository SECRET called OPENAI_API_KEY.
+#   It is never in the code, and GitHub hides it in the logs.
+# - The result appears on the run's page (the "summary") and as a downloadable file.
+
+name: Run the claim desk
+
+on:
+  workflow_dispatch:                 # manual start only: no schedule, no runs on issues or comments
+    inputs:
+      claim:
+        description: "Which claim email?"
+        type: choice
+        options:
+          - claim_1_covered.txt
+          - claim_2_not_covered.txt
+          - claim_3_missing_info.txt
+        default: claim_1_covered.txt
+      demo:
+        description: "Demo mode: fixed answers, no API key, no cost"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read                     # the workflow may only read this repository
+
+concurrency:
+  group: claim-desk                  # one run at a time
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5               # stop after 5 minutes, whatever happens
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v5
+
+      - name: Install Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install the OpenAI package
+        run: pip install -r requirements.txt
+
+      - name: Run the claim desk (trigger, agents, check, draft for a person)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}    # the secret, handed to the program
+          CLAIM: ${{ inputs.claim }}
+          DEMO: ${{ inputs.demo }}
+        run: |
+          if [ "$DEMO" = "true" ]; then
+            python claim_desk.py "data/claims/$CLAIM" --demo
+          else
+            python claim_desk.py "data/claims/$CLAIM"
+          fi
+
+      - name: Save the draft for the claims handler
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: claim-desk-draft
+          path: output/
+          if-no-files-found: ignore

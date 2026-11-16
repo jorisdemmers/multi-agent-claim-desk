@@ -1,0 +1,4 @@
+# Never commit your API key. Keep it in a .env file locally, or in a GitHub secret.
+.env
+output/
+__pycache__/
