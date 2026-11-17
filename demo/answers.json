@@ -1,17 +1,17 @@
 {
   "_note": "Fixed example answers for demo mode (no API key, no cost). In real mode, the model writes these.",
   "claim_1_covered.txt": {
-    "intake": "{\"customer_name\": \"Sanne de Vries\", \"policy_number\": \"DH-1001\", \"date_of_damage\": \"2026-11-03\", \"what_happened\": \"A hailstorm broke roof tiles and cracked a skylight; rain is coming in.\", \"damage\": \"Six broken roof tiles and a cracked skylight\", \"estimated_cost_eur\": 1850}",
-    "policy": "{\"decision\": \"COVERED\", \"reason\": \"Hail damage to the building is covered by policy DH-1001. The deductible of EUR 250 applies.\", \"payout_eur\": 1600}",
+    "intake": "Customer name: Sanne de Vries\nPolicy number: DH-1001\nDate of damage: 3 November 2026\nWhat happened: A hailstorm broke six roof tiles and cracked the skylight above the stairs. Rain is now coming in.\nDamage: Six broken roof tiles and a cracked skylight\nEstimated cost: EUR 1,850",
+    "policy": "Decision: COVERED\nReason: Hail damage to the building is covered by policy DH-1001. The deductible of EUR 250 applies.\nPayout: EUR 1,600",
     "letter": "DRAFT - to be checked by a claims handler\n\nDear Sanne de Vries,\n\nThank you for reporting the hail damage of 3 November 2026. We are sorry to hear that rain is coming in.\n\nYour home insurance covers hail damage to the building. Your roofer's quote is EUR 1,850. After your deductible of EUR 250, we will pay EUR 1,600.\n\nYou can ask your roofer to start the repair.\n\nKind regards,\nClaims desk, Demo Home Insurance (a fictional insurer)"
   },
   "claim_2_not_covered.txt": {
-    "intake": "{\"customer_name\": \"Mehmet Yilmaz\", \"policy_number\": \"DH-2002\", \"date_of_damage\": \"2026-11-03\", \"what_happened\": \"Hail damaged the roof and broke the attic skylight.\", \"damage\": \"Damaged roof and broken skylight\", \"estimated_cost_eur\": 2400}",
-    "policy": "{\"decision\": \"NOT COVERED\", \"reason\": \"Policy DH-2002 insures only belongings inside the home. Damage to the roof and skylight is damage to the building, which is not insured.\", \"payout_eur\": 0}",
+    "intake": "Customer name: Mehmet Yilmaz\nPolicy number: DH-2002\nDate of damage: 3 November 2026\nWhat happened: A heavy hailstorm damaged the roof and broke the skylight in the attic.\nDamage: Damaged roof and broken attic skylight\nEstimated cost: EUR 2,400",
+    "policy": "Decision: NOT COVERED\nReason: Policy DH-2002 insures only belongings inside the home. Damage to the roof and skylight is damage to the building, which is not insured.\nPayout: EUR 0",
     "letter": "DRAFT - to be checked by a claims handler\n\nDear Mehmet Yilmaz,\n\nThank you for reporting the hail damage of 3 November 2026.\n\nYour policy is a contents insurance. It covers your belongings inside the home, but not the building itself. The roof and the skylight are part of the building, so we cannot pay for this repair.\n\nIf your belongings were damaged as well, please let us know.\n\nKind regards,\nClaims desk, Demo Home Insurance (a fictional insurer)"
   },
   "claim_3_missing_info.txt": {
-    "intake": "{\"customer_name\": \"Lisa\", \"policy_number\": null, \"date_of_damage\": null, \"what_happened\": \"After a storm, water is coming through the ceiling.\", \"damage\": \"Water coming through the ceiling\", \"estimated_cost_eur\": null}",
+    "intake": "Customer name: Lisa\nPolicy number: unknown\nDate of damage: unknown\nWhat happened: After a storm last week, water is coming through the ceiling.\nDamage: Water coming through the ceiling\nEstimated cost: unknown",
     "policy": "",
     "letter": ""
   }
