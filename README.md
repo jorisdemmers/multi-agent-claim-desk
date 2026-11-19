@@ -50,7 +50,7 @@ Demo mode uses fixed example answers instead of the model. It shows the whole fl
 1. **Copy this repository** to your own GitHub account: *Fork*, or download the files and upload them to a new repository. On a fork, open the Actions tab once and enable workflows.
 2. **Make an OpenAI key with a spending limit.** In the OpenAI platform, create a separate project for this demo, set a monthly spend limit (a hard limit, for example $5) for that project, and create an API key in that project.
 3. **Store the key as a secret.** In your repository: *Settings* → *Secrets and variables* → *Actions* → *New repository secret*. Name: `OPENAI_API_KEY`. Value: your key.
-4. **Run it.** Actions tab → *Run the claim desk* → *Run workflow* → choose a claim. The result appears on the run's page, and as a file you can download.
+4. **Run it.** Actions tab → *Run the claim desk* → *Run workflow* → choose a claim. The result appears on the run's page, and as files you can download: the report and the draft letter as a PDF.
 
 Never put your key in the code. Anyone can read a public repository; nobody can read its secrets.
 
@@ -64,7 +64,7 @@ If you copied this repository to your own account, replace `jorisdemmers/multi-a
 
 Demo mode is free and needs no key. For real mode, each student uses their own OpenAI key, stored as a Colab secret named `OPENAI_API_KEY` (the key icon in the left bar). Changes in the notebook do not change the files in this repository, and the other way round.
 
-In the notebook, every agent prints its output in a box, with where it goes next. Students can also **upload their own claim email** (.txt, .eml, .msg, .pdf, .docx or .html) or paste one. Demo mode only has fixed answers for the three example emails, so an own email needs real mode. Use invented emails only: in real mode the text is sent to OpenAI.
+In the notebook, every agent prints its output in a box, with where it goes next. Students can also **upload their own claim email** (.txt, .eml, .msg, .pdf, .docx or .html) or paste one. Demo mode only has fixed answers for the three example emails, so an own email needs real mode. Use invented emails only: in real mode the text is sent to OpenAI. When you approve the letter (type *yes*), it is saved as a PDF and your browser downloads it.
 
 ## Run it on your own computer
 

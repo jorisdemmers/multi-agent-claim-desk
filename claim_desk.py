@@ -319,6 +319,30 @@ def letter_agent(client, budget, claim_name, facts, decision):
 # 9. THE PERSON: nothing is sent. We write a draft for a claims handler to approve.
 # ============================================================================
 
+def letter_to_pdf(letter, path):
+    """Save the draft letter as a PDF file (needs the package fpdf2). Returns True if it worked."""
+    try:
+        import fpdf
+    except ImportError:
+        print("         (no PDF of the letter: install it with  pip install fpdf2)")
+        return False
+    text = letter.strip().encode("latin-1", "replace").decode("latin-1")   # the standard font has simple characters only
+    pdf = fpdf.FPDF(format="A4")
+    pdf.set_margins(25, 25, 25)
+    pdf.add_page()
+    pdf.set_font("Helvetica", "B", 14)
+    pdf.cell(0, 10, "Demo Home Insurance (a fictional insurer)", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(6)
+    pdf.set_font("Helvetica", "", 11)
+    pdf.multi_cell(0, 6, text)
+    pdf.ln(10)
+    pdf.set_font("Helvetica", "", 8)
+    pdf.multi_cell(0, 4, "Draft for a claims handler. Teaching example (Applied AI for Business, "
+                         "University of Amsterdam): nothing has been sent.")
+    pdf.output(str(path))
+    return True
+
+
 def report(claim_name, demo, facts, problems, decision, letter, budget, stopped_because=None):
     lines = [f"# Claim desk: {claim_name}", "",
              f"Mode: {'demo (fixed answers, no cost)' if demo else 'real (model ' + MODEL + ')'}", "",
@@ -345,6 +369,8 @@ def report(claim_name, demo, facts, problems, decision, letter, budget, stopped_
     out_dir = HERE / "output"
     out_dir.mkdir(exist_ok=True)
     (out_dir / f"{Path(claim_name).stem}_draft.md").write_text(text)
+    if letter:                                           # the draft letter also as a PDF
+        letter_to_pdf(letter, out_dir / f"{Path(claim_name).stem}_draft_letter.pdf")
     if os.getenv("GITHUB_STEP_SUMMARY"):                 # on GitHub: also show it on the run's page
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
             f.write(text)
@@ -405,7 +431,9 @@ def main():
             print("         This can mean the project's monthly spending limit is reached. See README, 'Costs'.")
         sys.exit(1)
 
-    print(f"PERSON   draft written to output/{claim_path.stem}_draft.md. Nothing has been sent.")
+    letter_pdf = HERE / "output" / f"{claim_path.stem}_draft_letter.pdf"
+    print(f"PERSON   draft written to output/{claim_path.stem}_draft.md"
+          + (f" and output/{letter_pdf.name}" if letter and letter_pdf.exists() else "") + ". Nothing has been sent.")
     print(f"COST     {budget.calls} calls, ${budget.cost_usd:.5f}")
 
 
