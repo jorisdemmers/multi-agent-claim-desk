@@ -1,19 +1,31 @@
 {
   "_note": "Invented policies for teaching. Not real people, not a real insurer.",
   "DH-1001": {
-    "holder": "Sanne de Vries",
     "product": "Home insurance: building and contents",
-    "covers": ["storm", "hail", "fire", "water damage from a burst pipe"],
-    "does_not_cover": ["wear and tear", "damage caused by poor maintenance"],
+    "covers": [
+      "storm",
+      "hail",
+      "fire",
+      "water damage from a burst pipe"
+    ],
+    "does_not_cover": [
+      "wear and tear",
+      "damage caused by poor maintenance"
+    ],
     "deductible_eur": 250,
     "max_payout_eur": 25000,
     "valid_until": "2027-12-31"
   },
   "DH-2002": {
-    "holder": "Mehmet Yilmaz",
     "product": "Contents insurance only (the building itself is not insured)",
-    "covers": ["theft", "fire", "storm or hail damage to belongings inside the home"],
-    "does_not_cover": ["damage to the building itself, such as the roof, windows or skylights"],
+    "covers": [
+      "theft",
+      "fire",
+      "storm or hail damage to belongings inside the home"
+    ],
+    "does_not_cover": [
+      "damage to the building itself, such as the roof, windows or skylights"
+    ],
     "deductible_eur": 100,
     "max_payout_eur": 10000,
     "valid_until": "2027-06-30"
