@@ -257,11 +257,16 @@ def intake_agent(client, budget, claim_name, email_text):
 # 6. CHECK: plain code, no AI. A check between the steps breaks the chain of mistakes.
 # ============================================================================
 
+# Which facts must be there before agent 2 may start. For the demo, only the policy number:
+# without it, the tool cannot find the policy. Add labels for a stricter check, e.g. "date of damage".
+REQUIRED = ["policy number"]
+
+
 def check_facts(facts):
     """Read agent 1's lines and return a list of problems. An empty list means: go on."""
     found = read_lines(facts)
     problems = []
-    for label in ["customer name", "policy number", "date of damage", "estimated cost"]:
+    for label in REQUIRED:
         if is_unknown(found.get(label, "")):
             problems.append(f"missing: {label}")
     return problems
