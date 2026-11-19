@@ -38,7 +38,7 @@ The order of the steps is fixed in the code. That makes this a **workflow**: the
 
 Every part of `claim_desk.py` is labelled with comments. Start reading at section 10, "The glue".
 
-## Try it without a key (demo mode, free)
+## Try it without a key (demo mode, free; script and GitHub only)
 
 Demo mode uses fixed example answers instead of the model. It shows the whole flow and costs nothing.
 
@@ -62,9 +62,9 @@ The notebook `claim_desk_colab.ipynb` runs the same claim desk step by step, wit
 
 If you copied this repository to your own account, replace `jorisdemmers/multi-agent-claim-desk` in that link with your account and repository name.
 
-Demo mode is free and needs no key. For real mode, each student uses their own OpenAI key, stored as a Colab secret named `OPENAI_API_KEY` (the key icon in the left bar). Changes in the notebook do not change the files in this repository, and the other way round.
+The notebook needs an OpenAI key: each student (or the class) uses a key stored as a Colab secret named `OPENAI_API_KEY` (the key icon in the left bar). Changes in the notebook do not change the files in this repository, and the other way round.
 
-In the notebook, every agent prints its output in a box, with where it goes next. Students can also **upload their own claim email** (.txt, .eml, .msg, .pdf, .docx or .html) or paste one. Demo mode only has fixed answers for the three example emails, so an own email needs real mode. Use invented emails only: in real mode the text is sent to OpenAI. When you approve the letter (type *yes*), it is saved as a PDF and your browser downloads it.
+In the notebook, every agent prints its output in a box, with where it goes next. The trigger asks for a claim email: students paste it, or upload a file (.txt, .eml, .msg, .pdf, .docx or .html). Sample emails are in `data/sample_emails/` and `data/claims/`. Use invented emails only: the text is sent to OpenAI. When you approve the letter (type *yes*), it is saved as a PDF and your browser downloads it. The notebook has no demo mode; demo mode (below) is only for `claim_desk.py` and the GitHub workflow.
 
 ## Run it on your own computer
 

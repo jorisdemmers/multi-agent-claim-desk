@@ -257,7 +257,7 @@ def intake_agent(client, budget, claim_name, email_text):
 # 6. CHECK: plain code, no AI. A check between the steps breaks the chain of mistakes.
 # ============================================================================
 
-# Which facts must be there before agent 2 may start. For the demo, only the policy number:
+# Which facts must be there before agent 2 may start. Here, only the policy number:
 # without it, the tool cannot find the policy. Add labels for a stricter check, e.g. "date of damage".
 REQUIRED = ["policy number"]
 
