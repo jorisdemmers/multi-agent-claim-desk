@@ -5,12 +5,20 @@
 # - Your OpenAI key is read from the repository SECRET called OPENAI_API_KEY.
 #   It is never in the code, and GitHub hides it in the logs.
 # - The notebook, with all its outputs, is saved as a downloadable file on the run's page.
-# - The notebook has its own budget guard (Step 1): at most 400 calls and $0.25.
+# - Each notebook has its own budget guard (Step 1).
 
-name: Test the SHAP and DiCE notebook
+name: Test the SHAP and DiCE notebooks
 
 on:
   workflow_dispatch:                 # manual start only
+    inputs:
+      notebook:
+        description: "Which notebook?"
+        type: choice
+        options:
+          - claim_desk_xai.ipynb
+          - claim_desk_words_demo.ipynb
+        default: claim_desk_xai.ipynb
 
 permissions:
   contents: read                     # the workflow may only read this repository
@@ -38,17 +46,18 @@ jobs:
       - name: Run the notebook from top to bottom
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}    # the secret, handed to the notebook
+          NOTEBOOK: ${{ inputs.notebook }}
         run: |
-          jupyter nbconvert --to notebook --execute claim_desk_xai.ipynb \
-            --output claim_desk_xai_run.ipynb --ExecutePreprocessor.timeout=900
+          jupyter nbconvert --to notebook --execute "$NOTEBOOK" \
+            --output notebook_run.ipynb --ExecutePreprocessor.timeout=900
 
       - name: Show the notebook's results in the log
         if: always()
         run: |
           python - <<'PY'
           import json, os
-          if os.path.exists("claim_desk_xai_run.ipynb"):
-              nb = json.load(open("claim_desk_xai_run.ipynb"))
+          if os.path.exists("notebook_run.ipynb"):
+              nb = json.load(open("notebook_run.ipynb"))
               for cell in nb["cells"]:
                   for out in cell.get("outputs", []):
                       if out.get("name") == "stdout":
@@ -65,5 +74,5 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: xai-notebook-run
-          path: claim_desk_xai_run.ipynb
+          path: notebook_run.ipynb
           if-no-files-found: ignore
