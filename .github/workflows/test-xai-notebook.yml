@@ -42,6 +42,24 @@ jobs:
           jupyter nbconvert --to notebook --execute claim_desk_xai.ipynb \
             --output claim_desk_xai_run.ipynb --ExecutePreprocessor.timeout=900
 
+      - name: Show the notebook's results in the log
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, os
+          if os.path.exists("claim_desk_xai_run.ipynb"):
+              nb = json.load(open("claim_desk_xai_run.ipynb"))
+              for cell in nb["cells"]:
+                  for out in cell.get("outputs", []):
+                      if out.get("name") == "stdout":
+                          print("".join(out["text"]))
+                      if out.get("output_type") == "error":
+                          print("ERROR:", out["ename"], out["evalue"])
+                      data = out.get("data", {})
+                      if "text/plain" in data and "image/png" not in data:
+                          print("".join(data["text/plain"]))
+          PY
+
       - name: Save the notebook with its outputs
         if: always()
         uses: actions/upload-artifact@v6
