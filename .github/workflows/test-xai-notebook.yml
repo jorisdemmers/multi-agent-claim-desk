@@ -1,0 +1,51 @@
+# GITHUB ACTIONS: run the SHAP and DiCE test notebook once, from top to bottom, with the real model.
+#
+# - It runs ONLY when someone clicks "Run workflow" in the Actions tab
+#   (only people with write access to this repository can do that).
+# - Your OpenAI key is read from the repository SECRET called OPENAI_API_KEY.
+#   It is never in the code, and GitHub hides it in the logs.
+# - The notebook, with all its outputs, is saved as a downloadable file on the run's page.
+# - The notebook has its own budget guard (Step 1): at most 400 calls and $0.25.
+
+name: Test the SHAP and DiCE notebook
+
+on:
+  workflow_dispatch:                 # manual start only
+
+permissions:
+  contents: read                     # the workflow may only read this repository
+
+concurrency:
+  group: xai-notebook                # one run at a time
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20              # stop after 20 minutes, whatever happens
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v5
+
+      - name: Install Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install the packages
+        run: pip install "openai>=3.51,<4" shap dice-ml nbconvert ipykernel matplotlib
+
+      - name: Run the notebook from top to bottom
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}    # the secret, handed to the notebook
+        run: |
+          jupyter nbconvert --to notebook --execute claim_desk_xai.ipynb \
+            --output claim_desk_xai_run.ipynb --ExecutePreprocessor.timeout=900
+
+      - name: Save the notebook with its outputs
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: xai-notebook-run
+          path: claim_desk_xai_run.ipynb
+          if-no-files-found: ignore

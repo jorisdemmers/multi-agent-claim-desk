@@ -33,6 +33,7 @@ PERSON     nothing is sent: a claims handler reads the draft and approves it
 | **Person** | The draft goes to a person; nothing is sent | `report()` in `claim_desk.py` |
 | **Budget guard** | Stops a run before it costs too much | `Budget` in `claim_desk.py` |
 | **Notebook** | The same system, step by step, for Google Colab | `claim_desk_colab.ipynb` |
+| **Test notebook** | Tests the claim desk from the outside with SHAP and DiCE, for Google Colab | `claim_desk_xai.ipynb` |
 
 The order of the steps is fixed in the code. That makes this a **workflow**: the model never decides which agent comes next. In an **agent** in the strict sense, a model would decide that itself.
 
@@ -65,6 +66,14 @@ If you copied this repository to your own account, replace `jorisdemmers/multi-a
 The notebook needs an OpenAI key: each student (or the class) uses a key stored as a Colab secret named `OPENAI_API_KEY` (the key icon in the left bar). Changes in the notebook do not change the files in this repository, and the other way round.
 
 In the notebook, every agent prints its output in a box, with where it goes next. The trigger asks for a claim email: students paste it, or upload a file (.txt, .eml, .msg, .pdf, .docx or .html). Sample emails are in `data/sample_emails/` and `data/claims/`. Use invented emails only: the text is sent to OpenAI. When you approve the letter (type *yes*), it is saved as a PDF and your browser downloads it. The notebook has no demo mode; demo mode (below) is only for `claim_desk.py` and the GitHub workflow.
+
+## Test the claim desk with SHAP and DiCE (Colab)
+
+The notebook `claim_desk_xai.ipynb` tests the claim desk from the outside. Each claim is described with six inputs (policy, cause, what is damaged, cost, tone, writing); the notebook writes the email from them and sends it through agent 1, the check and agent 2. **SHAP** shows how much each input added to or took away from the payout. **DiCE** looks for the smallest change that turns a claim that is not covered into one that is. Written for people who do not program; it needs the same Colab secret `OPENAI_API_KEY`. The whole notebook costs a few cents; its budget guard stops it at $0.25.
+
+**Open the test notebook in Colab:** https://colab.research.google.com/github/jorisdemmers/multi-agent-claim-desk/blob/main/claim_desk_xai.ipynb
+
+The workflow "Test the SHAP and DiCE notebook" in the Actions tab runs the whole notebook once on GitHub with the real model, and saves it with its outputs.
 
 ## Run it on your own computer
 
