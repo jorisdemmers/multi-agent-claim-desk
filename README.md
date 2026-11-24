@@ -73,7 +73,7 @@ The notebook `claim_desk_xai.ipynb` tests the claim desk from the outside. Each 
 
 **Open the test notebook in Colab:** https://colab.research.google.com/github/jorisdemmers/multi-agent-claim-desk/blob/main/claim_desk_xai.ipynb
 
-The notebook `claim_desk_words_demo.ipynb` is a short teacher demo on one real email: it hides one word at a time (and, optionally, runs full SHAP on the words) to show which words change the payout. **Open the demo in Colab:** https://colab.research.google.com/github/jorisdemmers/multi-agent-claim-desk/blob/main/claim_desk_words_demo.ipynb
+The notebook `claim_desk_words_demo.ipynb` is a short teacher demo on one real email: it hides one word at a time to show which words change the payout. Words that changed the payout are run two more times, and the middle result is kept, because the model is not fully consistent. **Open the demo in Colab:** https://colab.research.google.com/github/jorisdemmers/multi-agent-claim-desk/blob/main/claim_desk_words_demo.ipynb
 
 The workflow "Test the SHAP and DiCE notebooks" in the Actions tab runs one of the two notebooks once on GitHub with the real model, and saves it with its outputs.
 
