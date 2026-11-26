@@ -69,7 +69,7 @@ In the notebook, every agent prints its output in a box, with where it goes next
 
 ## Test the claim desk with SHAP and DiCE (Colab)
 
-The notebook `claim_desk_xai.ipynb` tests the claim desk from the outside. Each claim is described with six inputs (cause, what is damaged, cost, tone, writing, language), all under policy DH-1001; the notebook writes the email from them, in English or Dutch, and sends it through agent 1, the check and agent 2. **SHAP** shows how much each input added to or took away from the payout. **DiCE** looks for the smallest change that turns a claim that is not covered into one that is. Written for people who do not program; it needs the same Colab secret `OPENAI_API_KEY`. The whole notebook costs a few cents; its budget guard stops it at $0.25.
+The notebook `claim_desk_xai.ipynb` tests the claim desk from the outside. A scoring agent first turns a claim email into six scores (cause, what is damaged, cost, tone, writing, language), all under policy DH-1001; students choose one of four emails or write their own. For each mix of scores the notebook writes the email, in English or Dutch, and sends it through agent 1, the check and agent 2. **SHAP** shows how much each input added to or took away from the payout. **DiCE** looks for the smallest change that turns a claim that is not covered into one that is. Written for people who do not program; it needs the same Colab secret `OPENAI_API_KEY`. The whole notebook costs a few cents; its budget guard stops it at $0.25.
 
 **Open the test notebook in Colab:** https://colab.research.google.com/github/jorisdemmers/multi-agent-claim-desk/blob/main/claim_desk_xai.ipynb
 
