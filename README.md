@@ -33,7 +33,7 @@ PERSON     nothing is sent: a claims handler reads the draft and approves it
 | **Person** | The draft goes to a person; nothing is sent | `report()` in `claim_desk.py` |
 | **Budget guard** | Stops a run before it costs too much | `Budget` in `claim_desk.py` |
 | **Notebook** | The same system, step by step, for Google Colab | `claim_desk_colab.ipynb` |
-| **Test notebook** | Tests the claim desk from the outside with SHAP and DiCE, for Google Colab | `claim_desk_xai.ipynb` |
+| **Test notebook** | Tests agent 2 of the claim desk with SHAP, for Google Colab | `claim_desk_xai.ipynb` |
 
 The order of the steps is fixed in the code. That makes this a **workflow**: the model never decides which agent comes next. In an **agent** in the strict sense, a model would decide that itself.
 
@@ -67,7 +67,7 @@ The notebook needs an OpenAI key: each student (or the class) uses a key stored 
 
 In the notebook, every agent prints its output in a box, with where it goes next. The trigger asks for a claim email: students paste it, or upload a file (.txt, .eml, .msg, .pdf, .docx or .html). Sample emails are in `data/sample_emails/` and `data/claims/`. Use invented emails only: the text is sent to OpenAI. When you approve the letter (type *yes*), it is saved as a PDF and your browser downloads it. The notebook has no demo mode; demo mode (below) is only for `claim_desk.py` and the GitHub workflow.
 
-## Test the claim desk with SHAP and DiCE (Colab)
+## Test the claim desk with SHAP (Colab)
 
 The notebook `claim_desk_xai.ipynb` tests agent 2 of the claim desk with SHAP. A scoring agent turns claim emails into six scores (cause, what is damaged, cost, tone, writing, language), all under policy DH-1001; there are four example emails, and students can add their own. Agent 2 decides on the scores. **SHAP** shows how much each score added to or took away from the payout, and the notebook downloads a one-page PDF report of the result. Written for people who do not program; it needs the same Colab secret `OPENAI_API_KEY`. The whole notebook costs a few cents; its budget guard stops it at $0.25.
 
